@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Lista de Representantes</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+	<h2>Adicionar Representante</h2>
+	<hr/>
+	<form th:action="@{/saveRepresentante}" th:object="${representante}" method="post">
+		<div class="form-group">
+			<label>Razão Social</label>
+			<input type="text" th:field="*{nome}" class="form-control col-4 mb-4">
+		</div>
+		<div class="form-group">
+			<label>Data de Nascimento</label>
+			<input type="date" th:field="*{nascimento}" class="form-control col-4 mb-4">
+		</div>
+		<div class="form-group">
+			<label>Endereço</label>
+			<input type="text" th:field="*{cpf}" class="form-control col-4 mb-4"
+			       onkeypress="$(this).mask('000.000.000-00')" placeholder="000.000.000-00">
+		</div>
+		<div class="form-group">
+			<label>Cargos</label>
+			<select th:field="*{cargo}" class="form-control col-4 mb-4">
+				<option value="Presidente">Presidente</option>
+				<option value="Gerente">Gerente</option>
+				<option value="Vendedor">Vendedor</option>
+				<option value="Desenvolvedor">Desenvolvedor</option>
+				<option value="Recepcionista">Recepcionista</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label>E-mail</label>
+			<input type="email" th:field="*{email}" class="form-control col-4 mb-4" placeholder="example@example.com">
+		</div>
+		<div class="form-group">
+			<label>Telefone</label>
+			<input type="tel" th:field="*{telefone}" class="form-control col-4 mb-4" placeholder="0000-0000">
+		</div>
+		<button class="btn btn-primary" type="submit">Save</button>
+		<input type="hidden" th:field="*{id}"/>
+	</form>
+	<hr/>
+	<a th:href="@{/representantes}">Back to list</a>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+</body>
+</html>

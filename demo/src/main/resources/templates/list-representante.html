@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Lista de Representantes</title>
+	<link rel="stylesheet" type="text/css"
+	      href="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.11.3/datatables.min.css"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+	<h2>Lista de Representantes</h2>
+	<hr/>
+	<a th:href="@{/addRepresentanteForm}" class="btn btn-primary mb-2">Adicionar Representantes</a>
+	<table class="table table-bordered table-striped" id="fornecedor-table">
+		<thead>
+		<tr>
+			<th>Nome</th>
+			<th>Nascimento</th>
+			<th>CPF</th>
+			<th>Cargo</th>
+			<th>E-mail</th>
+			<th>Telefone</th>
+			<th>Actions</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="representante: ${representante}">
+			<td th:text="${representante.nome}"></td>
+			<td th:text="${representante.nascimento}"></td>
+			<td th:text="${representante.cpf}"></td>
+			<td th:text="${representante.cargo}"></td>
+			<td th:text="${representante.email}"></td>
+			<td th:text="${representante.telefone}"></td>
+			<td>
+				<a th:href="@{/updateRepresentante(representanteId=${representante.id})}"
+				   class="btn btn-info">Update</a>
+				<a th:href="@{/deleteRepresentante(representanteId=${representante.id})}" class="btn btn-danger ml-2">Delete</a>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.11.3/datatables.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$("#fornecedor-table").DataTable({
+			'aoColumnDefs': [{
+				'bSortable': false,
+				'aTargets': [-1]
+			}]
+		});
+	})
+</script>
+</body>
+</html>

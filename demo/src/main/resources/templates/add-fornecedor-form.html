@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Lista de Fornecedores</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+	<h2>Adicionar Fornecedor</h2>
+	<hr/>
+	<form th:action="@{/saveFornecedor}" th:object="${fornecedor}" method="post">
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label>Razão Social</label>
+				<input type="text" th:field="*{razaoSocial}" class="form-control">
+			</div>
+			<div class="form-group col-md-6">
+				<label>CNPJ</label>
+				<input type="text" th:field="*{cnpj}" class="form-control"
+				       onkeypress="$(this).mask('00.000.000/0000-00')" placeholder="00.000.000/0000-00">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-2">
+				<label>CEP</label>
+				<input type="text" th:field="*{cep}" class="form-control"
+				       onkeypress="$(this).mask('00.000-000')" placeholder="00.000-000">
+			</div>
+			<div class="form-group col-md-6">
+				<label>Logradouro</label>
+				<input type="text" th:field="*{logradouro}" class="form-control"
+				       placeholder="Logradouro">
+			</div>
+			<div class="form-group col-md-4">
+				<label>Estado</label>
+				<input type="text" th:field="*{estado}" class="form-control"
+				       placeholder="Estado">
+			</div>
+			<div class="form-group col-md-4">
+				<label>Cidade</label>
+				<input type="text" th:field="*{cidade}" class="form-control"
+				       placeholder="Cidade">
+			</div>
+			<div class="form-group col-md-4">
+				<label>Bairro</label>
+				<input type="text" th:field="*{bairro}" class="form-control"
+				       placeholder="Bairro">
+			</div>
+			<div class="form-group">
+				<label>Tipo</label>
+				<select th:field="*{tipo}" class="form-control col-4 mb-4">
+					<option value="Casa">Casa</option>
+					<option value="Apartamento">Apartamento</option>
+					<option value="Chácara">Chácara</option>
+			</div>
+			<div class="form-group col-md-4">
+				<label>Número</label>
+				<input type="text" th:field="*{numero}" class="form-control"
+				       placeholder="Número">
+			</div>
+		</div>
+		<div class="form-group">
+			<label>Descrição das Atividades</label>
+			<textarea type="text" th:field="*{atividades}" class="form-control col-4 mb-4" rows="4"></textarea>
+		</div>
+		<div class="form-group">
+			<label>E-mail</label>
+			<input type="email" th:field="*{email}" class="form-control col-4 mb-4" placeholder="example@example.com">
+		</div>
+		<div class="form-group">
+			<label>Telefone</label>
+			<input type="tel" th:field="*{telefone}" class="form-control col-4 mb-4" placeholder="0000-0000">
+		</div>
+		<div class="form-group">
+			<label>Lista de Representantes</label>
+			<!-- Button to Open the Modal -->
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				Open modal
+			</button>
+
+			<!-- The Modal -->
+			<div class="modal" id="myModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">Modal Heading</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+
+						<!-- Modal body -->
+						<form th:action="@{/saveRepresentante}" th:object="${representante}" method="post">
+							<div class="form-group">
+								<label>Razão Social</label>
+								<input type="text" th:field="*{nome}" class="form-control col-4 mb-4">
+							</div>
+							<div class="form-group">
+								<label>Data de Nascimento</label>
+								<input type="date" th:field="*{nascimento}" class="form-control col-4 mb-4">
+							</div>
+							<div class="form-group">
+								<label>Endereço</label>
+								<input type="text" th:field="*{cpf}" class="form-control col-4 mb-4"
+								       onkeypress="$(this).mask('000.000.000-00')" placeholder="000.000.000-00">
+							</div>
+							<div class="form-group">
+								<label>Cargos</label>
+								<select th:field="*{cargo}" class="form-control col-4 mb-4">
+									<option value="Presidente">Presidente</option>
+									<option value="Gerente">Gerente</option>
+									<option value="Vendedor">Vendedor</option>
+									<option value="Desenvolvedor">Desenvolvedor</option>
+									<option value="Recepcionista">Recepcionista</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label>E-mail</label>
+								<input type="email" th:field="*{email}" class="form-control col-4 mb-4"
+								       placeholder="example@example.com">
+							</div>
+							<div class="form-group">
+								<label>Telefone</label>
+								<input type="tel" th:field="*{telefone}" class="form-control col-4 mb-4"
+								       placeholder="0000-0000">
+							</div>
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<hr/>
+		<a th:href="@{/list}">Back to list</a>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+</body>
+</html>
