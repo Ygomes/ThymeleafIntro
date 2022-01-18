@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "tbl_representantes")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
