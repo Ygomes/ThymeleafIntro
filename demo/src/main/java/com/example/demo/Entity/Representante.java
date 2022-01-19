@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Data
@@ -17,11 +16,8 @@ public class Representante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String email;
     private String cpf;
     private String cargo;
-    private String telefone;
-    private LocalDate nascimento;
 
     @ManyToOne
     @JoinColumn(name = "fornecedor_id")
