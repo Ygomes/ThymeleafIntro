@@ -35,7 +35,10 @@ public class FornecedorController {
     }
 
     @PostMapping(value = "/addFornecedorForm", params = {"save"})
-    private String saveFornecedor(@ModelAttribute Fornecedor fornecedor) {
+    private String saveFornecedor(@ModelAttribute Fornecedor fornecedor, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "addFornecedorForm";
+        }
         fornecedorRepository.save(fornecedor);
         return "redirect:/list";
     }
@@ -55,20 +58,19 @@ public class FornecedorController {
     }
 
     @RequestMapping(value = "/addFornecedorForm", params = {"addRepresentante"})
-    public ModelAndView addRepresentante(Fornecedor fornecedor, BindingResult bindingResult) {
+    public ModelAndView addRepresentante(Fornecedor fornecedor) {
         ModelAndView mav = new ModelAndView("add-fornecedor-form");
         fornecedor.getRepresentanteList().add(new Representante());
-        mav.addObject(fornecedor);
         return mav;
+
     }
 
     @RequestMapping(value = "/addFornecedorForm", params = {"removeRepresentante"})
-    public ModelAndView removeRepresentante(Fornecedor fornecedor, final BindingResult bindingResult, final HttpServletRequest req) {
+    public ModelAndView removeRepresentante(Fornecedor fornecedor, HttpServletRequest req) {
         final Integer representanteID = Integer.valueOf(req.getParameter("removeRepresentante"));
         fornecedor.getRepresentanteList().remove(representanteID.intValue());
         ModelAndView mav = new ModelAndView("add-fornecedor-form");
         mav.addObject(fornecedor);
         return mav;
     }
-
 }

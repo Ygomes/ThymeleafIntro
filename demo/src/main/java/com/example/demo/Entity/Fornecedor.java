@@ -31,6 +31,7 @@ public class Fornecedor {
     private String email;
     private String telefone;
 
-    @OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "fornecedor_id")
     private List<Representante> representanteList = new ArrayList<>();
 }

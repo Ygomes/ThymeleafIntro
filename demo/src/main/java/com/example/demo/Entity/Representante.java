@@ -19,8 +19,6 @@ public class Representante {
     private String cpf;
     private String cargo;
 
-    @ManyToOne
-    @JoinColumn(name = "fornecedor_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Fornecedor fornecedor;
-
 }
