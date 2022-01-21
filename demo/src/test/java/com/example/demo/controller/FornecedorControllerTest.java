@@ -1,24 +1,40 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.Entity.Fornecedor;
+import com.example.demo.Entity.Representante;
+import com.example.demo.Repository.FornecedorRepository;
+import com.sun.istack.NotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class FornecedorControllerTest extends AbstractTestNGSpringContextTests {
+public class FornecedorControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private FornecedorRepository fornecedorRepository;
+
+    @Test
+    public void testGetAllFornecedor() throws Exception {
+        mockMvc.perform(get("/list"))
+                .andExpect(status().isOk());
+    }
 
     @Test
     public void testAddFornecedorForm() throws Exception {
@@ -37,5 +53,59 @@ public class FornecedorControllerTest extends AbstractTestNGSpringContextTests {
                 .andExpect(xpath("//textarea[@name='atividades']").exists())
                 .andExpect(xpath("//input[@name='email']").exists())
                 .andExpect(xpath("//input[@name='telefone']").exists());
+    }
+
+    @Test
+    public void testUpdateDeleteFornecedor() throws Exception {
+        Long id = creatFornecedor().getId();
+        mockMvc.perform(get(String.format("/showUpdateForm?fornecedorId=%d", id)))
+                .andExpect(status().isOk());
+        mockMvc.perform(get(String.format("/deleteFornecedor?fornecedorId=%d", id)))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("list"));
+    }
+
+    @Test
+    public void testRepresentanteForm() throws Exception {
+        MockHttpServletRequestBuilder createRepresentanteForm = post("/addFornecedorForm")
+                .param("addRepresentante", "11");
+        mockMvc.perform(createRepresentanteForm)
+                .andExpect(status().isOk())
+                .andExpect(xpath("//input[@name='representanteList[0].nome']").exists())
+                .andExpect(xpath("//input[@name='representanteList[0].cpf']").exists())
+                .andExpect(xpath("//select[@name='representanteList[0].cargo']").exists());
+//        mockMvc.perform(post("/addFornecedorForm").param("removeRepresentante", "0"))
+//                .andExpect(status().isOk())
+//                .andExpect(xpath("//input[@name='representanteList[0].nome']").doesNotExist())
+//                .andExpect(xpath("//input[@name='representanteList[0].cpf']").doesNotExist())
+//                .andExpect(xpath("//select[@name='representanteList[0].cargo']").exists());
+
+    }
+
+    @Test
+    public void testSaveFornecedor() throws Exception {
+        MockHttpServletRequestBuilder createFornecedor = post("/addFornecedorForm").param("save", "1");
+        mockMvc.perform(createFornecedor)
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("list"));
+    }
+
+    @NotNull
+    private Fornecedor creatFornecedor() {
+        List<Representante> newRepresentante = new ArrayList<>();
+        final Fornecedor fornecedor = new Fornecedor();
+        fornecedor.setAtividades(new Random().toString());
+        fornecedor.setBairro(new Random().toString());
+        fornecedor.setCep(new Random().toString());
+        fornecedor.setCnpj(new Random().toString());
+        fornecedor.setLogradouro(new Random().toString());
+        fornecedor.setEmail(new Random().toString());
+        fornecedor.setEstado(new Random().toString());
+        fornecedor.setCidade(new Random().toString());
+        fornecedor.setTelefone(new Random().toString());
+        fornecedor.setTipo(new Random().toString());
+        fornecedor.setRepresentanteList(newRepresentante);
+        fornecedorRepository.save(fornecedor);
+        return fornecedor;
     }
 }

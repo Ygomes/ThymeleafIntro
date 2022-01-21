@@ -22,7 +22,7 @@
 			<th rowspan="2">Telefone</th>
 			<th colspan="4">Endereço</th>
 			<th rowspan="2">Atividades</th>
-			<th rowspan="2">Representantes</th>
+			<th rowspan="2">Representante</th>
 			<th rowspan="2">Actions</th>
 		</tr>
 		<tr>
@@ -45,14 +45,11 @@
 			<td th:text="${fornecedor.atividades}"></td>
 			<td>
 				<table>
-					<tr>
-						<th>Nome</th>
-						<th>Cargo</th>
-					</tr>
 					</thead>
 					<tbody>
 					<tr th:each="fornecedor : ${fornecedor.representanteList}">
 						<td th:text="${fornecedor.nome}"></td>
+						<td></td>
 						<td th:text="${fornecedor.cargo}"></td>
 					</tr>
 					</tbody>

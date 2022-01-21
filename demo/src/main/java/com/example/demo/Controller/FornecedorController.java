@@ -4,21 +4,21 @@ import com.example.demo.Entity.Fornecedor;
 import com.example.demo.Entity.Representante;
 import com.example.demo.Repository.FornecedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
-@Controller
+@RestController
 public class FornecedorController {
 
     @Autowired
     private FornecedorRepository fornecedorRepository;
 
-    @GetMapping({"/", "/list"})
+    @GetMapping({"/list"})
     public ModelAndView getAllFornecedor() {
         ModelAndView mav = new ModelAndView("list-fornecedor");
         List<Fornecedor> list = fornecedorRepository.findAll();
@@ -30,17 +30,15 @@ public class FornecedorController {
     public ModelAndView addFornecedor() {
         ModelAndView mav = new ModelAndView("add-fornecedor-form");
         Fornecedor newFornecedor = new Fornecedor();
+        newFornecedor.getRepresentanteList().add(new Representante());
         mav.addObject("fornecedor", newFornecedor);
         return mav;
     }
 
-    @PostMapping(value = "/addFornecedorForm", params = {"save"})
-    private String saveFornecedor(@ModelAttribute Fornecedor fornecedor, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "addFornecedorForm";
-        }
+    @RequestMapping(value = "/addFornecedorForm", params = {"save"})
+    private void saveFornecedor(@ModelAttribute Fornecedor fornecedor, HttpServletResponse response) throws IOException {
         fornecedorRepository.save(fornecedor);
-        return "redirect:/list";
+        response.sendRedirect("list");
     }
 
     @GetMapping("/showUpdateForm")
@@ -52,9 +50,9 @@ public class FornecedorController {
     }
 
     @GetMapping("/deleteFornecedor")
-    public String deleteFornecedor(@RequestParam Long fornecedorId) {
+    public void deleteFornecedor(@RequestParam Long fornecedorId, HttpServletResponse response) throws IOException {
         fornecedorRepository.deleteById(fornecedorId);
-        return "redirect:/list";
+        response.sendRedirect("list");
     }
 
     @RequestMapping(value = "/addFornecedorForm", params = {"addRepresentante"})
