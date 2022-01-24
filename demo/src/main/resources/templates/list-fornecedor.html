@@ -7,12 +7,24 @@
 	      href="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.11.3/datatables.min.css"/>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.11.3/datatables.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$("#fornecedor-table").DataTable({
+				'aoColumnDefs': [{
+					'bSortable': false,
+					'aTargets': [-1]
+				}]
+			});
+		})
+	</script>
 </head>
 <body>
 <div class="container table-responsive">
 	<h2>Lista de Fornecedores</h2>
 	<hr/>
-	<a th:href="@{/addFornecedorForm}" class="btn btn-primary mb-2">Adicionar Fornecedor</a>
+	<a th:href="@{/fornecedor}" class="btn btn-primary mb-2">Adicionar Fornecedor</a>
 	<table class="table table-bordered table-striped table-responsive-sm" id="fornecedor-table">
 		<thead>
 		<tr>
@@ -47,7 +59,7 @@
 				<table>
 					</thead>
 					<tbody>
-					<tr th:each="fornecedor : ${fornecedor.representanteList}">
+					<tr th:each="fornecedor : ${fornecedor.representante}">
 						<td th:text="${fornecedor.nome}"></td>
 						<td></td>
 						<td th:text="${fornecedor.cargo}"></td>
@@ -56,24 +68,12 @@
 				</table>
 			</td>
 			<td>
-				<a th:href="@{/showUpdateForm(fornecedorId=${fornecedor.id})}" class="btn btn-info">Update</a>
-				<a th:href="@{/deleteFornecedor(fornecedorId=${fornecedor.id})}" class="btn btn-danger ml-2">Delete</a>
+				<a th:href="@{/update(fornecedorId=${fornecedor.id})}" class="btn btn-info">Update</a>
+				<a th:href="@{/del(fornecedorId=${fornecedor.id})}" class="btn btn-danger ml-2">Delete</a>
 			</td>
 		</tr>
 		</tbody>
 	</table>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.11.3/datatables.min.js"></script>
-<script>
-	$(document).ready(function () {
-		$("#fornecedor-table").DataTable({
-			'aoColumnDefs': [{
-				'bSortable': false,
-				'aTargets': [-1]
-			}]
-		});
-	})
-</script>
 </body>
 </html>

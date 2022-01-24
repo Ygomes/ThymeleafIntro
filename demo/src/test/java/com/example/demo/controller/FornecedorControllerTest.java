@@ -38,7 +38,7 @@ public class FornecedorControllerTest {
 
     @Test
     public void testAddFornecedorForm() throws Exception {
-        mockMvc.perform(get("/addFornecedorForm"))
+        mockMvc.perform(get("/fornecedor"))
                 .andExpect(status().isOk())
                 .andExpect(xpath("//form").exists())
                 .andExpect(xpath("//input[@name='razaoSocial']").exists())
@@ -58,22 +58,22 @@ public class FornecedorControllerTest {
     @Test
     public void testUpdateDeleteFornecedor() throws Exception {
         Long id = creatFornecedor().getId();
-        mockMvc.perform(get(String.format("/showUpdateForm?fornecedorId=%d", id)))
+        mockMvc.perform(get(String.format("/update?fornecedorId=%d", id)))
                 .andExpect(status().isOk());
-        mockMvc.perform(get(String.format("/deleteFornecedor?fornecedorId=%d", id)))
+        mockMvc.perform(get(String.format("/del?fornecedorId=%d", id)))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("list"));
     }
 
     @Test
     public void testRepresentanteForm() throws Exception {
-        MockHttpServletRequestBuilder createRepresentanteForm = post("/addFornecedorForm")
+        MockHttpServletRequestBuilder createRepresentanteForm = post("/fornecedor")
                 .param("addRepresentante", "11");
         mockMvc.perform(createRepresentanteForm)
                 .andExpect(status().isOk())
-                .andExpect(xpath("//input[@name='representanteList[0].nome']").exists())
-                .andExpect(xpath("//input[@name='representanteList[0].cpf']").exists())
-                .andExpect(xpath("//select[@name='representanteList[0].cargo']").exists());
+                .andExpect(xpath("//input[@name='representante[0].nome']").exists())
+                .andExpect(xpath("//input[@name='representante[0].cpf']").exists())
+                .andExpect(xpath("//select[@name='representante[0].cargo']").exists());
 //        mockMvc.perform(post("/addFornecedorForm").param("removeRepresentante", "0"))
 //                .andExpect(status().isOk())
 //                .andExpect(xpath("//input[@name='representanteList[0].nome']").doesNotExist())
@@ -84,7 +84,7 @@ public class FornecedorControllerTest {
 
     @Test
     public void testSaveFornecedor() throws Exception {
-        MockHttpServletRequestBuilder createFornecedor = post("/addFornecedorForm").param("save", "1");
+        MockHttpServletRequestBuilder createFornecedor = post("/fornecedor").param("save", "1");
         mockMvc.perform(createFornecedor)
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("list"));
@@ -104,7 +104,7 @@ public class FornecedorControllerTest {
         fornecedor.setCidade(new Random().toString());
         fornecedor.setTelefone(new Random().toString());
         fornecedor.setTipo(new Random().toString());
-        fornecedor.setRepresentanteList(newRepresentante);
+        fornecedor.setRepresentante(newRepresentante);
         fornecedorRepository.save(fornecedor);
         return fornecedor;
     }

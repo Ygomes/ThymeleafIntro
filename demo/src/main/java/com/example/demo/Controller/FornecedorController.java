@@ -13,12 +13,13 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/")
 public class FornecedorController {
 
     @Autowired
     private FornecedorRepository fornecedorRepository;
 
-    @GetMapping({"/list"})
+    @GetMapping({"list"})
     public ModelAndView getAllFornecedor() {
         ModelAndView mav = new ModelAndView("list-fornecedor");
         List<Fornecedor> list = fornecedorRepository.findAll();
@@ -26,22 +27,22 @@ public class FornecedorController {
         return mav;
     }
 
-    @GetMapping("/addFornecedorForm")
+    @GetMapping("fornecedor")
     public ModelAndView addFornecedor() {
         ModelAndView mav = new ModelAndView("add-fornecedor-form");
         Fornecedor newFornecedor = new Fornecedor();
-        newFornecedor.getRepresentanteList().add(new Representante());
+        newFornecedor.getRepresentante().add(new Representante());
         mav.addObject("fornecedor", newFornecedor);
         return mav;
     }
 
-    @RequestMapping(value = "/addFornecedorForm", params = {"save"})
+    @RequestMapping(value = "fornecedor", params = {"save"})
     private void saveFornecedor(@ModelAttribute Fornecedor fornecedor, HttpServletResponse response) throws IOException {
         fornecedorRepository.save(fornecedor);
         response.sendRedirect("list");
     }
 
-    @GetMapping("/showUpdateForm")
+    @GetMapping("update")
     public ModelAndView showUpdateForm(@RequestParam Long fornecedorId) {
         ModelAndView mav = new ModelAndView("add-fornecedor-form");
         Fornecedor fornecedor = fornecedorRepository.findById(fornecedorId).get();
@@ -49,24 +50,24 @@ public class FornecedorController {
         return mav;
     }
 
-    @GetMapping("/deleteFornecedor")
+    @GetMapping("del")
     public void deleteFornecedor(@RequestParam Long fornecedorId, HttpServletResponse response) throws IOException {
         fornecedorRepository.deleteById(fornecedorId);
         response.sendRedirect("list");
     }
 
-    @RequestMapping(value = "/addFornecedorForm", params = {"addRepresentante"})
+    @RequestMapping(value = "fornecedor", params = {"addRepresentante"})
     public ModelAndView addRepresentante(Fornecedor fornecedor) {
         ModelAndView mav = new ModelAndView("add-fornecedor-form");
-        fornecedor.getRepresentanteList().add(new Representante());
+        fornecedor.getRepresentante().add(new Representante());
         return mav;
 
     }
 
-    @RequestMapping(value = "/addFornecedorForm", params = {"removeRepresentante"})
+    @RequestMapping(value = "fornecedor", params = {"removeRepresentante"})
     public ModelAndView removeRepresentante(Fornecedor fornecedor, HttpServletRequest req) {
         final Integer representanteID = Integer.valueOf(req.getParameter("removeRepresentante"));
-        fornecedor.getRepresentanteList().remove(representanteID.intValue());
+        fornecedor.getRepresentante().remove(representanteID.intValue());
         ModelAndView mav = new ModelAndView("add-fornecedor-form");
         mav.addObject(fornecedor);
         return mav;

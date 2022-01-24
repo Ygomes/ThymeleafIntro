@@ -33,5 +33,5 @@ public class Fornecedor {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "fornecedor_id")
-    private List<Representante> representanteList = new ArrayList<>();
+    private List<Representante> representante = new ArrayList<>();
 }

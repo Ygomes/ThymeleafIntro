@@ -22,7 +22,7 @@
 <div class="container">
 	<h2>Adicionar Fornecedor</h2>
 	<hr/>
-	<form th:action="@{/addFornecedorForm}" th:object="${fornecedor}" method="post">
+	<form th:action="@{/fornecedor}" th:object="${fornecedor}" method="post">
 		<div class="form-row">
 			<div class="form-group col-md-6">
 				<label>Razão Social</label>
@@ -104,17 +104,17 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr th:each="fornecedor, lista : *{representanteList}">
+				<tr th:each="fornecedor, lista : *{representante}">
 					<td th:text="${lista.count}">1</td>
 					<td>
-						<input type="text" th:field="*{representanteList[__${lista.index}__].nome}"/>
+						<input type="text" th:field="*{representante[__${lista.index}__].nome}"/>
 					</td>
 					<td>
 						<input type="text" placeholder="000.000.000-00" id="CPF"
-						       th:field="*{representanteList[__${lista.index}__].cpf}"/>
+						       th:field="*{representante[__${lista.index}__].cpf}"/>
 					</td>
 					<td>
-						<select th:field="*{representanteList[__${lista.index}__].cargo}" class="form-control">
+						<select th:field="*{representante[__${lista.index}__].cargo}" class="form-control">
 							<option value="Presidente">Presidente</option>
 							<option value="Gerente">Gerente</option>
 							<option value="Vendedor">Vendedor</option>
@@ -135,7 +135,8 @@
 		<button class="btn btn-primary" name="save" type="submit">Salvar</button>
 		<input type="hidden" th:field="*{id}"/>
 	</form>
-
 	<hr/>
 	<a th:href="@{/list}">Back to list</a>
 </div>
+</body>
+</html>
