@@ -74,12 +74,6 @@ public class FornecedorControllerTest {
                 .andExpect(xpath("//input[@name='representante[0].nome']").exists())
                 .andExpect(xpath("//input[@name='representante[0].cpf']").exists())
                 .andExpect(xpath("//select[@name='representante[0].cargo']").exists());
-//        mockMvc.perform(post("/addFornecedorForm").param("removeRepresentante", "0"))
-//                .andExpect(status().isOk())
-//                .andExpect(xpath("//input[@name='representanteList[0].nome']").doesNotExist())
-//                .andExpect(xpath("//input[@name='representanteList[0].cpf']").doesNotExist())
-//                .andExpect(xpath("//select[@name='representanteList[0].cargo']").exists());
-
     }
 
     @Test
