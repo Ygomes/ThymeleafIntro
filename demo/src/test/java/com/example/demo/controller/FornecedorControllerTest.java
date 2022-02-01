@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.Entity.Fornecedor;
-import com.example.demo.Entity.Representante;
-import com.example.demo.Repository.FornecedorRepository;
+import com.example.demo.entity.Fornecedor;
+import com.example.demo.entity.Representante;
+import com.example.demo.repository.FornecedorRepository;
 import com.sun.istack.NotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

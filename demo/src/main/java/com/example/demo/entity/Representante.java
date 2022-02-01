@@ -1,11 +1,8 @@
-package com.example.demo.Entity;
-
-import lombok.Data;
+package com.example.demo.entity;
 
 import javax.persistence.*;
 
 @Entity
-@Data
 public class Representante {
 
     @Id
@@ -13,19 +10,21 @@ public class Representante {
     private Long id;
     private String nome;
     private String cpf;
-    private String cargo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Fornecedor fornecedor;
 
+    @OneToOne
+    private Cargo cargo;
+
     public Representante() {
     }
 
-    public Representante(String nome, String cpf, String cargo, Fornecedor fornecedor) {
+    public Representante(String nome, String cpf, Fornecedor fornecedor, Cargo cargo) {
         this.nome = nome;
         this.cpf = cpf;
-        this.cargo = cargo;
         this.fornecedor = fornecedor;
+        this.cargo = cargo;
     }
 
     public Long getId() {
@@ -52,14 +51,6 @@ public class Representante {
         this.cpf = cpf;
     }
 
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
     public Fornecedor getFornecedor() {
         return fornecedor;
     }
@@ -68,14 +59,23 @@ public class Representante {
         this.fornecedor = fornecedor;
     }
 
+
+    public Cargo getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
+    }
+
     @Override
     public String toString() {
         return "Representante{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", cpf='" + cpf + '\'' +
-                ", cargo='" + cargo + '\'' +
                 ", fornecedor=" + fornecedor +
+                ", cargo=" + cargo +
                 '}';
     }
 }

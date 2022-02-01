@@ -116,11 +116,7 @@
 					</td>
 					<td>
 						<select th:field="*{representante[__${lista.index}__].cargo}" class="form-control">
-							<option value="Presidente">Presidente</option>
-							<option value="Gerente">Gerente</option>
-							<option value="Vendedor">Vendedor</option>
-							<option value="Desenvolvedor">Desenvolvedor</option>
-							<option value="Recepcionista">Recepcionista</option>
+							<option th:each="cargo : ${allCargos}" th:value="${cargo.id}" th:text="${cargo.name}">Cargo</option>
 						</select>
 					</td>
 					<td>

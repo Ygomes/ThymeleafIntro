@@ -1,6 +1,4 @@
-package com.example.demo.Entity;
-
-import lombok.Data;
+package com.example.demo.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,7 +6,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "tbl_fornecedores")
-@Data
 public class Fornecedor {
 
     @Id

@@ -1,8 +1,10 @@
-package com.example.demo.Controller;
+package com.example.demo.controller;
 
-import com.example.demo.Entity.Fornecedor;
-import com.example.demo.Entity.Representante;
-import com.example.demo.Repository.FornecedorRepository;
+import com.example.demo.entity.Cargo;
+import com.example.demo.entity.Fornecedor;
+import com.example.demo.entity.Representante;
+import com.example.demo.repository.CargoRepository;
+import com.example.demo.repository.FornecedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,6 +19,9 @@ public class FornecedorController {
 
     @Autowired
     private FornecedorRepository fornecedorRepository;
+
+    @Autowired
+    private CargoRepository cargoRepository;
 
     @GetMapping({"/", "list"})
     public ModelAndView getAllFornecedor() {
@@ -70,5 +75,10 @@ public class FornecedorController {
         ModelAndView mav = new ModelAndView("add-fornecedor-form");
         mav.addObject(fornecedor);
         return mav;
+    }
+
+    @ModelAttribute("allCargos")
+    public List<Cargo> populateCargo() {
+        return cargoRepository.findAll();
     }
 }
