@@ -1,13 +1,25 @@
-version: '3.8'
-volumes:
-  data:
 services:
-  db:
-    image: mysql:8.0
-    ports:
-      - "3306:3306"
-    volumes:
-      - data:/var/lib/mysql
+  mysql-standalone:
+    image: 'mysql:5.7'
     environment:
       - MYSQL_ROOT_PASSWORD=98513912
       - MYSQL_DATABASE=challenge
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+  webapp:
+    image: webapp
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-standalone:3306/challenge?autoReconnect=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "98513912"
+    build:
+      context: "./"
+    depends_on:
+      mysql-standalone:
+        condition: service_healthy
