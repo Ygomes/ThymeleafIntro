@@ -1,0 +1,8 @@
+com\example\demo\DemoApplication.class
+com\example\demo\repository\FornecedorRepository.class
+com\example\demo\entity\Fornecedor.class
+com\example\demo\repository\CargoRepository.class
+com\example\demo\controller\FornecedorController.class
+com\example\demo\entity\Representante.class
+com\example\demo\entity\Cargo.class
+com\example\demo\entity\CargoConfig.class
