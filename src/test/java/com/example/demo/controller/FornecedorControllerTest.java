@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class FornecedorControllerTest {
 
     @Autowired
@@ -32,7 +33,7 @@ public class FornecedorControllerTest {
 
     @Test
     public void testGetAllFornecedor() throws Exception {
-        mockMvc.perform(get("/list"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/list"))
                 .andExpect(status().isOk());
     }
 

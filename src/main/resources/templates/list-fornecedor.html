@@ -24,6 +24,11 @@
 <body>
 <div class="container table-responsive">
 	<h2>Lista de Fornecedores</h2>
+	<div>
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" />
+		</form>
+	</div>
 	<hr/>
 	<a th:href="@{/fornecedor}" class="btn btn-primary mb-2">Adicionar Fornecedor</a>
 	<table class="table table-bordered table-striped table-responsive-sm" id="fornecedor-table">
